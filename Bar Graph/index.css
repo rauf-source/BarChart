@@ -1,3 +1,13 @@
 .bar{
-	fill : aquamarine;
+	fill : blue;
+	
+}
+.bar : hover{
+	fill : red;
+}
+svg{
+	background-color : aquamarine;
+}
+svg: hover{
+background-color : red;	
 }
