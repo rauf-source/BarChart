@@ -3,7 +3,7 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
 .then(json=> {
 //creating our main svg for graph
 const h = 400;
-const w =  1000;
+const w =  800;
 const padding =  60;
 const svg =  d3.select("#graph")
 			   .append("svg")
@@ -132,8 +132,8 @@ d3.select('svg').selectAll("rect")
 .enter()
 .append("rect")
 .attr("x", (d,i)=> xScale(d[0]))
-.attr("y", (d,i)=> h - yScale(d[1]))
-.attr("height", (d,i)=> h-280)
+.attr("y", (d,i)=> yScale(d[1]))
+.attr("height", (d,i)=> h -yScale(d[1]) - padding)
 .attr("width", (d,i)=> 2);
 
 
