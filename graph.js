@@ -2,12 +2,12 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
 .then(response => response.json())
 .then(json=> {
 //creating our main svg for graph
-const h = 800;
-const w =  1300;
-const padding =  80;
-const svg =  d3.select("body")
+const h = 400;
+const w =  1000;
+const padding =  60;
+const svg =  d3.select("#graph")
 			   .append("svg")
-			   .attr("width", w * 2)
+			   .attr("width", w)
 			   .attr("height", h);
 /*
 getting data from json that we we need
@@ -102,18 +102,16 @@ for(let i = 0; i <  gdpData.length;i++){
 }
 
 
-console.log(years);
+console.log(gdpData);
 //gdp is done, [year.quarter, ]
 //x-scale for years
-const xScale =  d3.scaleLinear();
-xScale.domain([d3.min(years, d=> d[0]), d3.max(years, d=> d[0])]);
-xScale.range([padding,w - padding]);
+const xScale  =  d3.scaleLinear()
+					.domain([d3.min(gdpData, d=>d[0]),d3.max(gdpData, d=> d[0])])
+					.range([padding,w -padding])
 
-//y-scale for gdp
-const yScale =  d3.scaleLinear();
-yScale.domain([0, 18000]);
-yScale.range([h - padding, padding]);
-
+const yScale  =  d3.scaleLinear()
+					.domain([d3.min(gdpData, d=>d[1]),d3.max(gdpData, d=>d[1])])
+					.range([h- padding,padding])
 //make x and y axes
 const xAxis =  d3.axisBottom(xScale);
 const yAxis =  d3.axisLeft(yScale);
@@ -125,29 +123,18 @@ svg.append("g")
 svg.append("g")
 .attr("transform", "translate(" + padding + ", 0)" )
 .call(yAxis);
+console.log(xScale(d3.max(gdpData,d=> d[0])))
 //append rect elements to make graph with scales
 //data is actually gdp
-console.log("gdp", gdpData)
-svg.selectAll("rect")
+
+d3.select('svg').selectAll("rect")
 .data(gdpData)
 .enter()
 .append("rect")
-.attr("x", (d,i)=> i)
-.attr("y", d=> yScale(d[1]) )
-.attr("width", 3)
-.attr("height",d=> d[1])
-.attr("class", "bar")
-
-
-
-
-
-
-
-
-
-
-
+.attr("x", (d,i)=> xScale(d[0]))
+.attr("y", (d,i)=> h - yScale(d[1]))
+.attr("height", (d,i)=> h-280)
+.attr("width", (d,i)=> 2);
 
 
 
