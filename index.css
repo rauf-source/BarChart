@@ -2,9 +2,10 @@
 	fill : blue;
 	
 }
-.bar : hover{
-	fill : red;
+.bar:hover{
+	
 }
+
 svg{
 	background-color : aquamarine;
 }

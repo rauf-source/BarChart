@@ -33,59 +33,7 @@ let years = date.map((n)=>{
 	
 	return [parseInt(n.substring(0,4) ), returnQuarter(parseInt(n.substring(5,7)))] 
 })
-//seems like we have to create a function for assing quarter specifically using logic
-//***********************making data given to us usefull for us in the program**************
-function returnQuarter(n){
-	switch(n){
-		//1,4,7,10
-		case 1:
-		return "Q1";
-		break;
 
-		case 4:
-		return "Q2";
-		break;
-
-		case 7:
-		return "Q3";
-		break;
-
-		case 10:
-		return "Q4";
-		break;
-
-		default:
-		return "Qn"; 
-	}
-}
-function returnPoints(n){
-	switch(n){
-		//1,4,7,10
-		case 1:
-		return 0;
-		break;
-
-		case 4:
-		return 0.25;
-		break;
-
-		case 7:
-		return 0.50;
-		break;
-
-		case 10:
-		return 0.75;
-		break;
-
-		default:
-		return "Qn"; 
-	}
-}
-/*console.log(years)*/
-//years array now has [(int) year, (String) quarter]
-
-//now let's make gdpData array containing years and gdp, but only years this time
-//found out later I also need width so I'm gonna divide everyvalue by total length, 
 let gdpData = [];
 for(let i = 0 ; i < json.data.length; i++){
 	gdpData[i] =  [parseInt(json.data[i][0].substring(0,4) ), returnPoints(parseInt(json.data[i][0].substring(5,7)) ),parseInt(json.data[i][1]) ]
@@ -134,12 +82,18 @@ d3.select('svg').selectAll("rect")
 .attr("x", (d,i)=> xScale(d[0]))
 .attr("y", (d,i)=> yScale(d[1]))
 .attr("height", (d,i)=> h -yScale(d[1]) - padding)
-.attr("width", (d,i)=> 2);
+.attr("width", (d,i)=> 2.0)
+.attr("class", "bar")
+.append("title")
+.text((d,i)=>years[i][0] + "," + years[i][1])
+.on('mouseover', function (d, i) {
+          d3.select(this).transition()
+               .duration('50')
+               .attr('opacity', '.85');
 
 
 
-
-
+//////FUNCTIONS
 
 
 })
